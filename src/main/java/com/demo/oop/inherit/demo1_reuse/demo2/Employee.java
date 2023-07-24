@@ -115,14 +115,14 @@ public class Employee {
         System.out.println(e.getName());
         System.out.println(e.getSalary());
 
-        //员工e加薪10%
+        //员工e加薪50%
         e.raiseSalary(50);
         System.out.println(e.getSalary());
 
-        //员工e2加薪10%
+        //员工e2加薪80%
         Employee e2 = new Employee("phy", 60000);
         System.out.println(e2.getSalary());
-        e2.raiseSalary(100);
+        e2.raiseSalary(80);
         System.out.println(e2.getSalary());
 
 

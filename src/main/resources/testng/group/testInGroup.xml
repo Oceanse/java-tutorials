@@ -9,8 +9,8 @@
     </groups>
     <test name="Test">
         <classes>
-            <class name="com.demo.testNG.group.GroupDemo"/>
-            <class name="com.demo.testNG.group.GroupDemo2"/>
+            <class name="com.demo.others.testNG.group.GroupDemo"/>
+            <class name="com.demo.others.testNG.group.GroupDemo2"/>
         </classes>
     </test>
 </suite>

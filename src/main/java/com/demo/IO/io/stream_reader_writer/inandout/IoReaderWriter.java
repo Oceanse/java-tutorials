@@ -11,13 +11,13 @@ import java.io.*;
 public class IoReaderWriter {
 
     @Test
-    public void test() throws IOException {
+    public void copy() throws IOException {
         FileReader fr = null;
         FileWriter fw = null;
 
         try {
-            fr = new FileReader("xanadu.txt");
-            fw = new FileWriter("characteroutput.txt");
+            fr = new FileReader("testResource/goodLuck.txt");
+            fw = new FileWriter("testResource/goodLuck2.txt");
 
             int c;
             while ((c = fr.read()) != -1) {
@@ -42,7 +42,7 @@ public class IoReaderWriter {
      *  里面可以声明、初始化一个或多个资源，try语句会在程序结束时自动关闭（数据库连接、网络连接等）等资源
      */
     @Test
-    public void test2(){
+    public void copy2(){
         try(FileReader fr = new FileReader("pom.xml");
             FileWriter fw = new FileWriter("testResource/test.txt")) {
             int len;
@@ -53,26 +53,6 @@ public class IoReaderWriter {
         } catch (IOException e){
             e.printStackTrace();
         }
-    }
-
-
-
-    @Test
-    public void test3() throws IOException{
-        File src = new File("pom.xml");
-        File dest = new File("testResource\\test.txt");
-
-        FileReader fr = new FileReader(src);
-        //fos指向被写文件,如果有这个文件，在这个文件后面追加数据.
-        FileWriter fw = new FileWriter(dest, true);
-
-        char[] b = new char[10];
-        int len;
-        while ((len = fr.read(b)) != -1) {
-            fw.write(b, 0, len);
-        }
-        fw.close();//后打开先关闭
-        fr.close();//先打开后关闭
     }
 
 }

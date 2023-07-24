@@ -2,12 +2,10 @@ package com.demo.lambda.function_interface;
 
 import com.demo.collection_map.model.comparable_model.Students;
 import com.demo.collection_map.model.comparable_model.Students2;
+import io.cucumber.java.sl.In;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -15,21 +13,19 @@ import java.util.function.Supplier;
 
 
 /**
- *
  * java内置四大函数式接口，都是泛型接口
- *
+ * <p>
  * Consumer<T> :消费型接口
- * 			void accept(T t);
- *
+ * void accept(T t);
+ * <p>
  * Supplier<T> :供给型接口
- * 			T get();
- *
+ * T get();
+ * <p>
  * Function<T,R> :函数型接口
- * 			R apply(T t);
- *
+ * R apply(T t);
+ * <p>
  * Predicate<T> :断言型接口
- * 			boolean test(T t);
- *
+ * boolean test(T t);
  */
 public class FunctionInterface {
     /**
@@ -39,18 +35,18 @@ public class FunctionInterface {
     public void testConsumer() {
         //Lambda表达式的参数列表的数据类型可以省略不写，因为JVM编译器通过上下文推断出，数据类型，即“类型推断”
         //这个过程可以想象成包含了创建了实现类及其对象
-        Consumer<String> consumer = (str) -> {
+        Consumer<String> consumer = str -> {
             System.out.println(str.toUpperCase());
         };
 
-        //Consumer对象调用自己的accept()方法
+        //Consumer对象调用自己的accept(T t)方法
         consumer.accept("millionaire");
     }
 
     /**
      * 消费型接口interface Consumer<T> {void accept(T t);}
      * 面向Consumer接口编程，方法的具体功能取决于接口的具体实现，也就是接口的实现类
-     * 有点像函数式编程，把参数"money" 传给函数"consumer"去处理
+     * 有点像函数式编程，把参数"money" 传给函数"consumer"去处理，方法的调用者来决定这个函数的具体实现
      *
      * @param money
      * @param consumer
@@ -60,12 +56,48 @@ public class FunctionInterface {
         consumer.accept(money);
     }
 
+
+    /**
+     * 方法的调用主要是传递参数，只不过这里的参数包括传统意义的参数以及"函数参数"
+     * consumer方法会对参数进行具体处理
+     */
     @Test
     public void testConsumer2() {
         consumer(1000.0, item -> {
             item = item - 100;
             System.out.println("消费100元，还剩" + item + "元");
         });
+    }
+
+
+    /**
+     * 消费型接口interface Consumer<T> {void accept(T t);}
+     * 面向Consumer接口编程，方法的具体功能取决于接口的具体实现，也就是接口的实现类
+     * 有点像函数式编程，把参数"money" 传给函数"consumer"去处理，方法的调用者来决定这个函数的具体实现
+     *
+     * @param list
+     * @param consumer
+     */
+    public <T> void processList(Consumer<T> consumer, List<T> list) {
+        for (T t : list) {
+            consumer.accept(t);
+        }
+    }
+
+
+    /**
+     * 方法的调用主要是传递参数，只不过这里的参数包括传统意义的参数以及"函数参数"
+     * consumer方法会对参数进行具体处理
+     */
+    @Test
+    public void testConsumer3() {
+        List<Integer> list = Arrays.asList(1, 2, 3);
+        List<Integer> newList = new ArrayList<>();
+        processList(item -> {
+            item = item * 2;
+            newList.add(item);
+        }, list);
+        System.out.println(newList);
     }
 
 
@@ -91,7 +123,8 @@ public class FunctionInterface {
 
     /**
      * 面向Supplier接口编程，方法的具体功能取决于接口的具体实现，也就是接口的实现类
-     *有点像函数式编程
+     * 有点像函数式编程
+     *
      * @param count
      * @param supplier
      * @return
@@ -107,15 +140,15 @@ public class FunctionInterface {
 
 
     /**
-     * 供给型接口Supplier<T><T>
-     * T get()
+     * 方法的调用主要是传递参数，只不过这里的参数包括传统意义的参数以及"函数参数"
+     * getNumList方法会对参数进行具体处理
      */
     @Test
     public void testSupplier2() {
         List<Integer> numList = getNumList(10, () -> {
             return (int) (Math.random() * 100);
         });
-        //若lambda体只有一条return 语句，那么花括号和return可以同时省略
+        //若lambda体只有一条return 语句，那么花括号，分号，return可以同时省略
         List<Integer> numList2 = getNumList(10, () ->
                 (int) (Math.random() * 100)
         );
@@ -141,7 +174,8 @@ public class FunctionInterface {
 
     /**
      * 面向Function接口编程，方法的具体功能取决于接口的具体实现，也就是接口的实现类
-     *有点像函数式编程，把参数"money" 传给函数"consumer"去处理
+     * 有点像函数式编程，把参数"str" 传给函数"function"去处理
+     *
      * @return
      */
     public int getStrLength(String str, Function<String, Integer> function) {
@@ -149,8 +183,8 @@ public class FunctionInterface {
     }
 
     /**
-     * 函数型接口Function<T, R>
-     * R apply(T t)
+     * 方法的调用主要是传递参数，只不过这里的参数包括传统意义的参数以及"函数参数"
+     * getStrLength方法会对参数进行具体处理
      */
     public void testFunction2() {
         int len1 = getStrLength("me", str -> {
@@ -165,7 +199,8 @@ public class FunctionInterface {
 
     /**
      * 面向Function接口编程，方法的具体功能取决于接口的具体实现，也就是接口的实现类
-     *有点像函数式编程，把参数"money" 传给函数"consumer"去处理
+     * 有点像函数式编程，把参数"str" 传给函数"function"去处理
+     *
      * @return
      */
     public String myTrim(String str, Function<String, String> function) {
@@ -173,8 +208,8 @@ public class FunctionInterface {
     }
 
     /**
-     * 函数型接口Function<T, R>
-     * R apply(T t)
+     * 方法的调用主要是传递参数，只不过这里的参数包括传统意义的参数以及"函数参数"
+     * getStrLength方法会对参数进行具体处理
      */
     @Test
     public void testFunction3() {
@@ -199,9 +234,10 @@ public class FunctionInterface {
         Predicate<Map> predicate2 = map -> map.isEmpty();
     }
 
+
     /**
      * 面向Function接口编程，方法的具体功能取决于接口的具体实现，也就是接口的实现类
-     *
+     ** 有点像函数式编程，把参数"ls" 传给函数"predicate"去处理
      * @return
      */
     public List<String> filterString(List<String> ls, Predicate<String> predicate) {
@@ -214,10 +250,9 @@ public class FunctionInterface {
         }
         return list;
     }
-
     /**
-     * 断言型接口Predicate<T>
-     * boolean test(T t)
+     * 方法的调用主要是传递参数，只不过这里的参数包括传统意义的参数以及"函数参数"
+     * filterString方法会对参数进行具体处理
      */
     @Test
     public void testPredicate2() {

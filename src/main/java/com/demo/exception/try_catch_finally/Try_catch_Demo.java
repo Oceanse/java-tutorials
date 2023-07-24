@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-/*
+/**
  *当业务逻辑代码出现问题时候，系统会自动生成一个包含错误信息的异常类对象，然后把这个对象提交给java运行时环境(JRE)，JRE会首先在当前方法中进行处理或者抛给上层方法，
  *上层方法采取同样的处理方式，如果最后异常对象没有被处理，最后只能有JRE处理，它的默认处理方式就是打印异常栈信息，并且中断程序运行
  *
@@ -73,7 +73,6 @@ public class Try_catch_Demo {
         } catch (ArithmeticException e) {
             e.printStackTrace();//e.printStackTrace(); 使用这个方法打印出来的是所有出错的信息，包括了使用getMessage()方法打印出来的信息
         }
-
         System.out.println("catch后面可以被执行。。。");//程序会正常继续执行
     }
 
@@ -209,7 +208,7 @@ public class Try_catch_Demo {
     /**
      * 异常对象被父类捕获
      * In this example, we generate NullPointerException, but didn't provide the corresponding com.demo.exception type.
-     * In such case, the catch block containing the parent com.demo.exception class Exception will invoked.
+     * In such case, the catch block containing the parent com.demo.exception class Exception will be invoked.
      */
     @Test
     public void test2_9 () {

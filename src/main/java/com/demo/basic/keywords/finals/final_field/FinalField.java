@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 定义：
  * 常量是指在程序的整个运行过程中值保持不变的量；
  * final修饰变量就变成了常量，其语法: final dataType variableName = value
- * final修饰的是基本类型变量，那么变量保存的字面值一旦赋值不能变；若修饰的是引用变量，只能指向一个固定的对象(保存的地址不能变)，但是指向对象的内容可以改变
+ * final修饰的是基本类型变量，那么变量保存的字面值一旦赋值不能变；若修饰的是引用变量，一旦赋值只能指向一个固定的对象(保存的地址不能变)，但是指向对象的内容可以改变
  * 这里不变的本质是变量对应的内存空间保存的变量值不能再改变
  * <p>
  * 赋值：
@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * 特点：
  * 常量可以看作一种特殊的变量，只是只能手动赋值一次，一旦初始化就不可以被修改，声明明常量的同时一点要赋予一个初始值，即使是成员变量。
- * 对千final修饰的成员变量而言， 一旦有了初始值， 就不能被重新赋值， 如果既没有在定义成员变量时指定初始值， 也没有在初始化块、
+ * 对千final修饰的成员变量而言， 一旦有了初始值， 就不能被重新赋值
  * Java语法规定： final修饰的成员变量必须由程序员显式地指定初始值。
  * final成员变量在显式初始化之前不能直接访问，但是可以通过方法访问，这可以认为是java设计的一个缺陷，建议开发者进来避免在
  * final成员变量显式初始化之前进行访问
@@ -56,7 +56,7 @@ public class FinalField {
     /**
      *实例常量: 构造器 初始化
      */
-    final boolean Flag;
+    final boolean FLAG;
 
 
     /**
@@ -77,20 +77,33 @@ public class FinalField {
     public static final double PI = 3.14;
 
 
-    {//构造代码块初始化实例属性，这里是第一次赋值，之后改变量的值不能再改变
+    {//构造代码块初始化实例常量属性，这里是第一次赋值，之后改变量的值不能再改变
         NAME = "ocean";
     }
 
     static {
-        //静态代码块初始化静态属性，这里是第一次赋值，之后改变量的值不能再改变
+        //静态代码块初始化静态常量属性，这里是第一次赋值，之后改变量的值不能再改变
         PORT = 10086;
     }
 
 
+    /**
+     * 构造方法中初始化实例常量属性FLAG是在构造器中初始化，
+     * 如果存在多个构造器，要保证每个构造器都要对其初始化
+     */
     public FinalField() {
-        Flag = true;//构造方法中初始化实例属性，这里是第一次赋值，之后该变量的值不能再改变
+        FLAG = true;//构造方法中初始化实例属性，这里是第一次赋值，之后该变量的值不能再改变
         //NAME = "ocean";//实例代码块要在构造器之前被执行，因为NAME已经在代码块中被初始化，所以这里不能再次初始化
         //PORT=10086; //静态代码块要在构造器之前被执行，因为PORT已经在代码块中被初始化，所以这里不能再次初始化
+    }
+
+
+    /**
+     * 构造方法中初始化实例常量属性FLAG是在构造器中初始化，
+     * 如果存在多个构造器，要保证每个构造器都要对其初始化
+     */
+    public FinalField(boolean flag) {
+        FLAG = flag;//构造方法中初始化实例属性，这里是第一次赋值，之后该变量的值不能再改变
     }
 
 
@@ -99,7 +112,7 @@ public class FinalField {
      * 常量初始化之后便不能进行修改
      */
     @Test
-    public void test1() {
+    public void testLocalConstant() {
         // 局部常量
         final int ID = 15721166;
         //ID=15721167;  不能修改常量的值
@@ -110,7 +123,7 @@ public class FinalField {
      * 如果没有使用局部常量，可以不进行初始化
      */
     @Test
-    public void test1_2() {
+    public void testLocalConstant2() {
         final char LETTER;
         final String NATION;
         System.out.println("如果没有使用局部常量，可以不进行初始化");
@@ -121,7 +134,7 @@ public class FinalField {
      * 常量初始化之后便不能进行修改
      */
     @Test
-    public void test2() {
+    public void testLocalConstant3() {
         //scores 是局部常量，并且被初始化，永远指向首次声明的new ConcurrentHashMap<>()
         //这里scores保存的地址永远不会变，指向的对象永远不变，但是指向的对象的内容可以改变
         final Map<String, String> scores = new ConcurrentHashMap<>();
@@ -133,7 +146,7 @@ public class FinalField {
 
 
     @Test
-    public void test2_2() {
+    public void testLocalConstant4() {
         //sb是局部常量，并且被初始化，永远指向首次声明的new StringBuilder()
         //这里sb保存的地址永远不会变，指向的对象永远不变，但是指向的对象的内容可以改变
         final StringBuilder sb = new StringBuilder();
@@ -142,7 +155,7 @@ public class FinalField {
     }
 
 
-    public void test3(final int a) {
+    public void testLocalConstant5(final int a) {
         //该方法被调用时候会传入一个实参(对形参初始化)，因此方法体中不能对final 修饰的形参赋值
         //a=4;
         //另外意味着这个形参变量一旦被赋值之后，在整个方法体中值都保持不变
@@ -150,7 +163,7 @@ public class FinalField {
 
 
     @Test
-    public void test4() {
+    public void testLocalConstant6() {
         //常量值自动类型转换然后赋值给变量
         double count = new FinalField().QTY;
         //常量参与运算
@@ -159,15 +172,16 @@ public class FinalField {
 
 
     /**
+     * 编译优化：常量引用替换
      * 对一个final变量来说， 不管它是类变量、实例变量， 还是局部变量，这个final变量就不再是一个变量， 而是相当于一个直接量。
-     * 对于这个程序来说， 变髦a其实根本不存在， 当程序执行System.out.println(a); 代码时， 实际转换为执行
+     * 对于这个程序来说， 变量a其实根本不存在， 当程序执行System.out.println(a); 代码时， 实际转换为执行
      * System.out.println(5)。
      * <p>
      * final修饰符的一个重要用途就是定义” 宏变量” 。当定义final变量时就为该变量指定了初始值， 而且该初始值可以在编译时就确定下来，
      * 那么这个final变量本质上就是一个＂宏变量” ， 编译器会把程序中所有用到该变量的地方直接替换成该变量的值。
      */
     @Test
-    public void test6() {
+    public void testConstant() {
         final int a = 5;
         //编译后的字节码文件或者二进制文件，就是 System.out.println(5);
         System.out.println(a);
@@ -175,8 +189,9 @@ public class FinalField {
 
 
     /**
+     * 编译优化：常量引用替换
      * 除上面那种为final变量赋值时赋直接量的情况外， 如果被赋的表达式只是基本的算术表达式或字符串连接运算(即使字符串连接运算中包含隐式类型
-     * （将数值转换为字符串）转换)，没有访问普通变量或者调用方法，Java编译器同样会将这种final变量当成“ 宏变星” 处理
+     * （将数值转换为字符串）转换)，没有访问普通变量或者调用方法，Java编译器同样会将这种final变量当成“ 宏变量” 处理
      * 个人总结：字面量或者字面量表达式赋值给一个常量，这个常量会被当做宏变量
      */
     @Test
@@ -190,7 +205,6 @@ public class FinalField {
         System.out.println(b);
         System.out.println(str);
         System.out.println(book);
-
 
         //下面的book2 变量的值因为调用了方法， 所以编译器无法在编译时被确定下来
         final String book2 = "疯狂Java 讲义： " + String.valueOf(99.0);

@@ -20,6 +20,8 @@ import java.nio.charset.Charset;
  * 常用方法：
  * public int read() throws IOException ： 读取单个字符，返回一个int型变量代表读取到的字符
  * public int read(char [] c)： 读取字符到c数组，返回读取到字符的个数
+ *
+ * 实际上， FileReader在类内部实现过程中也是利用了InputStreamReader完成字节流到字符流的转化，只不过转化时采用的字符集为系统默认的字符集。
  */
 public class FileReaderDemo {
 
@@ -63,7 +65,6 @@ public class FileReaderDemo {
         System.out.println((char) fr.read());
         System.out.println((char) fr.read());
         System.out.println((char) fr.read());
-
     }
 
 
@@ -165,7 +166,7 @@ public class FileReaderDemo {
         FileReader fr = null;
         try {
             fr = new FileReader("testResource\\test.txt");
-            char[] b = new char[3];
+            char[] b = new char[4];
             int len;
             //len表示读取数组中的有效长度,也就是读取到的字符数量
             //第一次循环char[] b={'中','国','人','最'};  len=4, new String(b,0,4)=中国人最
@@ -191,7 +192,7 @@ public class FileReaderDemo {
     /**
      * 文件内容：中国人，采用GB2312编码；
      * new FileReader(file)会默认采用utf-8进行解码，因此解码后的字符流会存在乱码，所以后面read()的时候会产生乱码
-     *
+     *解决该问题的办法是，放弃使用FileReader，改用InputStreamReader，在获取InputStreamReader对象时，显示指定合适的字符集。
      * @throws IOException
      */
     @Test
@@ -216,7 +217,7 @@ public class FileReaderDemo {
     /**
      * 文件内容：中国人，采用GB2312编码；
      * new FileReader(file)会默认采用utf-8进行解码，因此解码后的字符流会存在乱码，所以后面read()的时候会产生乱码
-     *
+     *解决该问题的办法是，放弃使用FileReader，改用InputStreamReader，在获取InputStreamReader对象时，显示指定合适的字符集。
      * @throws IOException
      */
     @Test

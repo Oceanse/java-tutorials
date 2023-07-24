@@ -53,7 +53,7 @@ public class Computer2 {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Computer2("HP", 10000).getComputer().toString());
-        System.out.println(new Computer2("HP", 10000, "CORE i5").getComputer().toString());
+        System.out.println(new Computer2("HP", 10000).getComputer());
+        System.out.println(new Computer2("HP", 10000, "CORE i5").getComputer());
     }
 }

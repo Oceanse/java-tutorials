@@ -87,4 +87,15 @@ public class TernaryOperatorDemo {
     }
 
 
+    /**
+     * 三目运算符的后两个变量或者表达式的结果类型可以不一致
+     */
+    @Test
+    public void test4() {
+        boolean sex=false;
+        System.out.println(sex?'男':"woman");
+       //char c= sex?'男':"woman"; 变量接收结果时候后两个变量或者表达式的结果类型必须一致
+    }
+
+
 }

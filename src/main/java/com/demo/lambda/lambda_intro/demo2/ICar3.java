@@ -12,7 +12,7 @@ public interface ICar3 {
 
 class TestCar3 {
 
-    //匿名内部类
+    //通过匿名内部类创建实现类对象后，方法的功能也就确定下来，然后就可以传递实参，调用这个对象的方法
     static ICar3 car=new ICar3() {
         @Override
         public double getPrice() {
@@ -20,17 +20,19 @@ class TestCar3 {
         }
     };
 
+    //通过lambda方式创建实现类对象后，方法的功能也就确定下来，然后就可以传递实参，调用这个对象的方法
+    static ICar3 car2=()-> {return 1000;};
+
     //若lambda体只有一条return语句，那么花括号、return、分号可以同时省略
-    static ICar3 car2=()-> 100;
-
-    //或者完整写法
-    static ICar3 car3=()-> {return 1000;};
+    static ICar3 car3=()-> 100;
 
 
-    public static double showPrice(ICar3 car){
-        double price = car.getPrice();
-        System.out.println("price = " + price);
-        return price;
+    /**
+     * 面向ICar3接口编程，方法的具体功能取决于接口的具体实现，也就是接口的实现类
+     * @param car
+     */
+    public static void showPrice(ICar3 car){
+        System.out.println("price = " + car.getPrice());
     }
 
     public static void main(String[] args) {

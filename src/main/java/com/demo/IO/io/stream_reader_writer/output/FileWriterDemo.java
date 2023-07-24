@@ -23,21 +23,18 @@ import java.io.IOException;
 public class FileWriterDemo {
 
     @Test
-    public void test(){
-        File f=new File("testResource\\test.txt");
+    public void testFileWriter(){
+        File f = new File("testResource/lyric");
         FileWriter fw=null;
         try {
             try {
                 //如果没有这个文件，会创建该文件;如果有这个文件，会清空这个文件的数据.
                 fw=new FileWriter(f);
-
                 //Returns the name of the character encoding being used by this stream
                 System.out.println(fw.getEncoding());
-
                 //个人理解这里会对括号中的内容按照默认的字符集进行编码，然后写到输出流中，然后从输出流流向文件，文件再按照自己的编码方式解码展示
-                fw.write("i love china !");
-                fw.write("\n");
-                fw.write("i love mom !");
+                fw.write("我爱我的家乡和祖国 !\n");
+                fw.write("i love my mom and father!\n");
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -51,68 +48,19 @@ public class FileWriterDemo {
 
 
     @Test
-    public void test1_2(){
-        File f=new File("testResource\\test.txt");
+    public void FileWriterWithAppend(){
+        String filePath ="testResource/lyric";
         FileWriter fw=null;
         try {
             try {
-                //如果没有这个文件，会创建该文件;如果有这个文件，会清空这个文件的数据.
-                fw=new FileWriter(f);
-
-
-                //Returns the name of the character encoding being used by this stream
+                //fos指向被写文件,文件不存在会在工程根目录下被创建; 如果有这个文件，在这个文件后面追加数据
+                fw=new FileWriter(filePath,true);
                 System.out.println(fw.getEncoding());
-
                 //个人理解这里会对括号中的内容按照默认的字符集进行编码，然后写到输出流中，然后从输出流流向文件，文件再按照自己的编码方式解码展示
-                fw.write(new char[]{'G','o','o','d','l','u','c','k','2','0','2','2'});
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                fw.close();//关闭流，释放内存资源
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @Test
-    public void test1_3(){
-        File f=new File("testResource\\test.txt");
-        FileWriter fw=null;
-        try {
-            try {
-                //如果没有这个文件，会创建该文件;如果有这个文件，会清空这个文件的数据.
-                fw=new FileWriter(f);
-
-                //Returns the name of the character encoding being used by this stream
-                System.out.println(fw.getEncoding());
-
-                //个人理解这里会对括号中的内容按照默认的字符集进行编码，然后写到输出流中，然后从输出流流向文件，文件再按照自己的编码方式解码展示
-                fw.write(new char[]{'G','o','o','d','l','u','c','k','2','0','2','2'},0,8);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                fw.close();//关闭流，释放内存资源
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-    @Test
-    public void test2(){
-        File f=new File("testResource\\test.txt");
-        FileWriter fw=null;
-        try {
-            try {
-                //如果没有这个文件，会创建该文件;如果有这个文件，在这个文件后面追加数据
-                fw=new FileWriter(f,true);
-                fw.write("\n");
-                fw.write("God bless you!");
+                fw.write(new char[]{'G','o','o','d','l','u','c','k','2','0','2','3','\n'});
+                char[] contents=new char[]{'x','C','o','m','e',' ','o','n','\n'};
+                fw.write(contents,1,contents.length-1);//跳过第一个字符
+                fw.write("God bless you!\n");
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -145,7 +93,7 @@ public class FileWriterDemo {
                 System.out.println(fw.getEncoding());
 
                 //个人理解这里会对括号中的内容按照默认的utf-8字符集进行编码，然后写到输出流中，然后从输出流流向文件，文件再按照自己的编码方式解码展示;
-                //由于文件采用的是GB2312， 和字节流的编码格式不一致，所以会导致乱码
+                //由于文件采用的是Big5， 和字节流的编码格式不一致，所以会导致乱码
                 fw.write("我爱中国 !");
                 fw.write("\n");
                 fw.write("我爱妈妈 !");

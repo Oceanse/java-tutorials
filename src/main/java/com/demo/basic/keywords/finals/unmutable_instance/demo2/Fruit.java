@@ -10,14 +10,14 @@ public class Fruit {
     /**
      * 成员类型是引用类型，即使final修饰，该成员指向的对象还是可以改变，也就是Fruit对象的内容还是可以发生变化
      */
-    private final String[] kinds;
+    private final String[] KINDS;
 
     public Fruit(String[] kinds) {
-         this.kinds = kinds;
+         this.KINDS = kinds;
     }
 
     public String[] getKinds() {
-        return kinds;
+        return KINDS;
     }
 
 
@@ -28,7 +28,7 @@ public class Fruit {
      */
     public static void main(String[] args) {
         String[] fruitKinds=new String[]{"Apple","banana","orange"};
-        //成员变量kinds 和形参 fruitKinds 指向同一块内存地址(数组对象)
+        //成员变量kinds 和形参 fruitKinds 指向同一个数组对象，或者说数组对象有两个句柄
         Fruit fruit=new Fruit(fruitKinds);
         System.out.println(Arrays.toString(fruit.getKinds()));
 

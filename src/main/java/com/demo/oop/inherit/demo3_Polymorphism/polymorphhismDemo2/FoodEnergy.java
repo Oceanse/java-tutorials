@@ -15,6 +15,7 @@ public class FoodEnergy {
     }
 
     /**
+     * 面向接口调用
      * 用多态，totalEnergy()方法只需要和Food打交道，它完全不需要知道Fruit,Meat,Grain的存在，
      * 就可以正确计算出总的能量。如果我们要新增一种食物，只需要从Food派生，然后正确覆写getEnergy()方法就可以,
      * 把新的类型传入getTotalEnergy()，不需要修改任何代码。

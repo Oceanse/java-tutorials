@@ -18,7 +18,7 @@ public class BufferedWriterDemo {
     @Test
     public static void test() throws IOException {
 
-        BufferedWriter bw = new BufferedWriter(new FileWriter("testResource\\test.txt"));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("testResource/test.txt"));
         //个人理解这里会对括号中的内容按照默认的字符集进行编码，然后写到输出流中，然后从输出流流向文件，文件再按照自己的编码方式解码展示
         bw.write("今天是2020.05.17");
         bw.newLine();//Writes a line separator

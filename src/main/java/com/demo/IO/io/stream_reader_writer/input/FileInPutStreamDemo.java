@@ -67,7 +67,7 @@ import java.io.*;
 public class FileInPutStreamDemo {
 
     @Test
-    public void test1() throws IOException {
+    public void testReadByByte() throws IOException {
         //文件内容是"abc"， 文件采用utf-8编码，根据utf-8编码规则，这里一个字符占1个字节
         File file = new File("testResource/test.txt");
 
@@ -91,7 +91,6 @@ public class FileInPutStreamDemo {
         System.out.println((char) i1);
         System.out.println((char) i2);
         System.out.println((char) i3);
-        System.out.println((char) i4);
         fis.close();//关闭流，释放内存资源
     }
 
@@ -103,7 +102,7 @@ public class FileInPutStreamDemo {
      * @throws IOException
      */
     @Test
-    public void test1_2() throws IOException {
+    public void testReadByByte2() throws IOException {
         FileInputStream fis = new FileInputStream("testResource/test.txt");
         int i1, i2, i3, i4;
         //read(): return the next byte of data, return -1 if the end of the file is reached，可以想象成指针一开始在第一个编码的前面
@@ -124,7 +123,6 @@ public class FileInPutStreamDemo {
         System.out.println((char) i1);
         System.out.println((char) i2);
         System.out.println((char) i3);
-        System.out.println((char) i4);
         fis.close();//关闭流，释放内存资源
     }
 
@@ -139,7 +137,7 @@ public class FileInPutStreamDemo {
      * @throws IOException
      */
     @Test
-    public void test1_3() throws IOException {
+    public void testReadByByte3() throws IOException {
         File file = new File("testResource/test.txt");
         FileInputStream fis = new FileInputStream(file);
         int i;
@@ -162,7 +160,7 @@ public class FileInPutStreamDemo {
      * @throws IOException
      */
     @Test
-    public void test1_4() throws IOException {
+    public void testReadByByte4() throws IOException {
         File file = new File("testResource/test.txt");
         FileInputStream fis = new FileInputStream(file);
         int i;
@@ -185,7 +183,7 @@ public class FileInPutStreamDemo {
      * @throws IOException
      */
     @Test
-    public void test2() throws IOException {
+    public void testReadByByteArray() throws IOException {
 
         FileInputStream fis = new FileInputStream("testResource/test.txt");
         byte[] b = new byte[3];
@@ -194,8 +192,6 @@ public class FileInPutStreamDemo {
         int len = fis.read(b);
         //byte数组转成String相当于解码，源文件采用utf-8编码，这里JVM采用utf-8解码, 所以不会出现乱码
         System.out.println(new String(b, 0, len, "utf-8"));
-        //没有指明编码方式时候默认采用jvm默认编码方式：utf-8，和文件编码的方式一致，所以不会出现乱码
-        System.out.println(new String(b, 0, len));
         fis.close();//关闭流，释放内存资源
     }
 
@@ -204,13 +200,13 @@ public class FileInPutStreamDemo {
 
     /**
      * 文件内容是"中", unicode编号是\u4e2d, 文件是根据utf-8编码规则，底层编码占3个字节
-     * 指定jvm编码方式：utf-8， 所以这里会出现乱码
+     * 指定jvm编码方式：utf-8， 所以这里不会出现乱码
      * @throws IOException
      */
     @Test
-    public void test2_3() throws IOException {
+    public void testReadByByteArray2() throws IOException {
 
-        FileInputStream fis = new FileInputStream("testResource\\test.txt");
+        FileInputStream fis = new FileInputStream("testResource/test.txt");
         byte[] b = new byte[3];
         //这里每次最多 b.length 个字节的数据读入一个 byte 数组中(缓冲区),这里只能读取文件内容的三个字节
         int len = fis.read(b);
@@ -227,9 +223,8 @@ public class FileInPutStreamDemo {
      * @throws IOException
      */
     @Test
-    public void test2_4() throws IOException {
-
-        FileInputStream fis = new FileInputStream("testResource\\test.txt");
+    public void testReadByByteArray3() throws IOException {
+        FileInputStream fis = new FileInputStream("testResource/test.txt");
         //输入流中将最多 b.length 个字节的数据读入一个 byte 数组中(缓冲区)
         byte[] b = new byte[3];
         //这里相当于读取文件的底层编码到byte数组
@@ -243,7 +238,7 @@ public class FileInPutStreamDemo {
     /**
      * 文件内容：中国
      * 文件编码方式：utf-8
-     *  "中国"占用6个字节
+     * "中国"占用6个字节
      * 采用字节输入流的read(byte[] b)方法读取文件的内容(底层编码)，如果数组的长度大于文件所有字符长度，那么只要文件编码和解码(数组转String)一致不会出现乱码；
      * 如果数组的长度小于文件所有字符长度，即使编码和解码一致，也会有可能出现乱码；
      * 比如一个数组长度为10，文件内容“中国人”是采用utf-8的中文字符，意味着会占用6个字节；那么数组一次只能容纳10个字节，那么对这个数组用utf-8解码的时候就不会出现乱码
@@ -251,10 +246,10 @@ public class FileInPutStreamDemo {
      * @throws IOException
      */
     @Test
-    public void test2_5() throws IOException {
+    public void testReadByByteArray4() throws IOException {
 
         //内容"中国"， utf-8编码，占用6字节
-        File file = new File("testResource\\test.txt");
+        File file = new File("testResource/test.txt");
         FileInputStream fis = new FileInputStream(file);
 
         //byte数组长度大于文件所有字符占用的字节数,编码/解码一致时不会出现乱码
@@ -284,7 +279,7 @@ public class FileInPutStreamDemo {
      * @throws IOException
      */
     @Test
-    public void test2_6() throws IOException {
+    public void testReadByByteArray5() throws IOException {
 
         //内容"中国"， utf-8编码，占用6字节
         File file = new File("testResource\\test.txt");
@@ -309,13 +304,13 @@ public class FileInPutStreamDemo {
 
     /**
      * available(): returns an estimate of the number of remaining bytes that can be read
-     *
+     *内容：abc
      * @throws IOException
      */
     @Test
-    public void test3() throws IOException {
+    public void testAvailable() throws IOException {
         //文件内容是"abc"
-        FileInputStream fis = new FileInputStream("testResource\\test.txt");
+        FileInputStream fis = new FileInputStream("testResource/test.txt");
 
         //Returns an estimate of the number of remaining bytes that can be read
         //返回inputstream(文件中)剩余的可读的字节数，文件未读取时是3
@@ -349,8 +344,8 @@ public class FileInPutStreamDemo {
      * @throws IOException
      */
     @Test
-    public void test3_2() throws IOException {
-        FileInputStream fis = new FileInputStream("testResource\\test.txt");
+    public void testAvailable2() throws IOException {
+        FileInputStream fis = new FileInputStream("testResource/test.txt");
 
         //Returns an estimate of the number of remaining bytes that can be read
         //返回inputstream(文件中)剩余的可读的字节数，文件还没开始读取时候就是文件占用的总字节数
@@ -360,6 +355,7 @@ public class FileInPutStreamDemo {
         byte[] b=new byte[totalSize];
         fis.read(b);//不用再循环，但是不合适读取过大的文件，文件过大，那么byte数组就很大，意味着读取文件时占用的内存特别大
         System.out.println(new String(b,"utf-8"));
+        System.out.println(fis.available());
         fis.close();//先打开的后关闭
     }
 
@@ -371,7 +367,7 @@ public class FileInPutStreamDemo {
      * @throws IOException
      */
     @Test
-    public void test4() throws IOException {
+    public void testAvailableAndSkip() throws IOException {
 
         FileInputStream fis = new FileInputStream("testResource/test.txt");
 
@@ -382,7 +378,7 @@ public class FileInPutStreamDemo {
 
         //读取第1个字节后，剩余的可读的字节数是2
         System.out.println();
-        System.out.println((char)fis.read());
+        System.out.println((char)fis.read());//a
         System.out.println(fis.available());//2
 
         System.out.println();

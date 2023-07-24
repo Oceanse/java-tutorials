@@ -27,13 +27,9 @@ public class LambdaDemo {
             return Integer.compare(x, y);
         };
 
-
         //若lambda体只有一条语句，那么花括号,return,分号可以同时省略
         Comparator<Integer> comparator2 = (x, y) ->
                 Integer.compare(x, y);
-        //等价于
-        Comparator<Integer> comparator3 = (x, y) ->{
-                return Integer.compare(x, y);};
     }
 
 

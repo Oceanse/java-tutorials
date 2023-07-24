@@ -1,5 +1,6 @@
 package com.demo.exception.throw_throws;
 
+import com.demo.exception.custom_execption.MyException;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -7,18 +8,32 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * throw主要用来显示的抛出自定义异常
- * The Java throw keyword is used to explicitly throw an com.demo.exception.
- * The throw keyword is mainly used to throw custom com.demo.exception.
+ * throw主要用来显示的抛出自定义异常, The throw keyword is mainly used to throw custom com.demo.exception.
  */
 public class ThrowDemo {
 
 
     /**
+     * 有时我们会从 catch 中抛出一个异常，目的是为了改变异常的类型。
+     * 多用于在多系统集成时，当某个子系统故障，异常类型可能有多种，可以用统一的异常类型向外暴露，不需暴露太多内部异常细节。
+     * @param filePath
+     * @throws MyException
+     */
+    private static void readFile(String filePath) throws MyException {
+        try {
+           Class.forName("com.A");
+        } catch (ClassNotFoundException e) {
+            MyException ex = new MyException("read file failed.");
+            ex.initCause(e);
+            throw ex;
+        }
+    }
+
+    /**
      * 手动抛出异常不处理，那么程序会提前结束
      */
     @Test
-    public void test() {
+    public void testThrow1() {
         int m=0;
         if (m == 0) {
             //手动抛出异常，一般是在代码块的内部，当程序出现某种逻辑错误时由程序员主动抛出某种特定类型的异常
@@ -30,22 +45,18 @@ public class ThrowDemo {
         System.out.println("result="+1/0);//如果if语句块中抛出异常，那么程序会提前结束，这里不能被执行
     }
 
-
-
     @Test
-    public void test1_2() {
-        System.out.println("===========before");
-        this.test();//test方法会产生异常没有被处理，程序在test中就会提前结束，后面不能被执行
+    public void testThrow2() {
+        System.out.println("testThrow2 before");
+        this.testThrow1();//test方法会产生异常没有被处理，程序在test中就会提前结束，后面不能被执行
         System.out.println("===========after");
     }
-
-
 
     /**
      * 一定条件下，手动抛出异常没有实现，相当于没发生异常
      */
     @Test
-    public void test2() {
+    public void testThrow3() {
         int m = 1;
         if (m == 0) {//if block不会被执行
             throw new ArrayIndexOutOfBoundsException();//这里可以手动抛出自己想要的任何异常；后面不能跟代码；抛出异常之后整个方法的调用就结束了。
@@ -53,24 +64,18 @@ public class ThrowDemo {
         System.out.println("m！=0,这里能被执行。。。");//如果if语句块中抛出异常，那么程序会提前结束，这里不能被执行
     }
 
-
-
-
     @Test
-    public void test2_2() {
-        System.out.println("===========before");
-        this.test2();//test2方法没有产生异常
-        System.out.println("===========after");
+    public void testThrow4() {
+        System.out.println("testThrow4 before");
+        this.testThrow3();//test2方法没有产生异常
+        System.out.println("testThrow4 after");
     }
-
-
-
 
     /**
      * 手动抛出异常但是处理，程序会正常往下进行
      */
     @Test
-    public void test3() {
+    public void testThrow5() {
         int m = 0;
         try {
             if (m == 0) {
@@ -88,10 +93,10 @@ public class ThrowDemo {
      * 被调用的方法抛出异常被处理后，程序会正常往下进行
      */
     @Test
-    public void test3_2() {
-        System.out.println("===========before");
-        test3();//test3中异常被处理掉，后面可以正常运行
-        System.out.println("===========after");//test3抛出异常后有被处理，所以这里可以执行
+    public void testThrow6() {
+        System.out.println("testThrow6 before");
+        testThrow4();//test3中异常被处理掉，后面可以正常运行
+        System.out.println("testThrow6 after");//test3抛出异常后有被处理，所以这里可以执行
     }
 
 
@@ -99,7 +104,7 @@ public class ThrowDemo {
      * catch中抛出异常，相当于整个try-catch抛出了一个没被处理的异常对象
      */
     @Test
-    public void test4() {
+    public void testThrow7() {
         int m = 0;
         try {
             if (m == 0) {
@@ -117,7 +122,7 @@ public class ThrowDemo {
      * 抛出编译时异常，不处理编译不通过，可以try-catch处理
      */
     @Test
-    public void test5() {
+    public void testThrow8() {
         File file=new File("/a.txt");
         if (!file.exists()) {
             //这里抛出编译时异常，不处理编译不通过，可以try-catch处理
@@ -137,7 +142,7 @@ public class ThrowDemo {
      * 抛出编译时异常，不处理编译不通过，可以throws处理
      */
     @Test
-    public void test5_2() throws IOException {
+    public void testThrow9() throws IOException {
         File file=new File("/a.txt");
 
         if (!file.exists()) {

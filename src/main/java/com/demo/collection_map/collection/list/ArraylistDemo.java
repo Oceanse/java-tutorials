@@ -1,7 +1,7 @@
 package com.demo.collection_map.collection.list;
 
 import com.demo.collection_map.model.*;
-import com.demo.pojo.Resource;
+import com.demo.others.pojo.Resource;
 import com.google.common.collect.Lists;
 import org.testng.annotations.Test;
 
@@ -9,6 +9,7 @@ import java.util.*;
 
 
 /**
+ * https://juejin.cn/post/6844903582194466824
  * ArrayList底层存储结构是数组,容量大小可调整； 可以进行快速的随机访问，插入与删除元素的速度相对较慢。
  * 集合只能存储引用(对象的内存地址)，不能存储基本数据类型，也不能存储对象，如果添加的是基本类型数据则会自动装箱
  * 有序可以重复
@@ -21,13 +22,13 @@ public class ArraylistDemo {
      * List的构造
      */
     @Test
-    public void test() {
+    public void testConstructArrayList() {
 
         //通过可变参数构造List, Returns a fixed-size list；Arrays.asList()是个坑，用此方法得到的List的长度是不可改变的，
         //asList()方法实现： 返回的ArrayList不是java.util包下的，而是java.util.Arrays.ArrayList；它是Arrays类自己定义的一个静态内部类，这个内部类没有实现add()、remove()方法
         //如果你的List只是用来遍历，就用Arrays.asList()。如果还要添加或删除元素，还是乖乖地new一个java.util.ArrayList，然后一个一个的添加元素。
         List list = Arrays.asList(1, 2, 3);
-        System.out.println(list);//等价于ls.toString()， ArrayList重写了toString方法
+        System.out.println(list);
         //list.add(1); //运行会报错
 
         //通过数组构造List, Returns a fixed-size list
@@ -85,7 +86,7 @@ public class ArraylistDemo {
         container.add(true);
         container.add("abc");
         container.add(new Resource());
-        container.add(new com.demo.jetty.model.User());
+        container.add(new com.demo.IO.net_io.jetty.model.User());
         System.out.println(container);//Collection集合重写了toString方法,相当于依次打印每个对象的toString
     }
 
@@ -115,8 +116,16 @@ public class ArraylistDemo {
         container.add(1);
         container.add(2.0f);
         container.add(3.0);
-        ArrayList<Object> container2 = new ArrayList();
-        container2.addAll(container);
+
+        HashSet<Double> container2 = new HashSet();
+        container2.add(1.0);
+        container2.add(2.0);
+        container2.add(3.0);
+
+        ArrayList<Number> container3 = new ArrayList();
+        container3.addAll(container);
+        container3.addAll(container2);
+        System.out.println("container3 = " + container3);
     }
 
 
@@ -130,10 +139,10 @@ public class ArraylistDemo {
         container.add(2.0f);
         container.add(3.0);
 
-        ArrayList container2 = new ArrayList();
+        ArrayList<String> container2 = new ArrayList();
         container2.add("one");
         container2.add("two");
-        container2.addAll(1,container);
+        container.addAll(1,container2);
         System.out.println(container2);
     }
 
@@ -337,9 +346,6 @@ public class ArraylistDemo {
     }
 
 
-
-
-
     /**
      * 查询
      */
@@ -405,7 +411,7 @@ public class ArraylistDemo {
         Object clone = container.clone();
         ArrayList container2 = (ArrayList) clone;
         System.out.println(container2);
-        System.out.println(container == container2);
+        System.out.println(container == container2);//false
     }
 
 
@@ -419,13 +425,16 @@ public class ArraylistDemo {
         ls.add("Bbb");
         ls.add("Ccc");
 
+        //重写toString
+        System.out.println(ls);
+
         //fori循环
         System.out.println();
         for (int i = 0; i < ls.size(); i++) {
             System.out.print(ls.get(i).toUpperCase() + " ");
         }
         System.out.println();
-        System.out.println(ls);
+
 
         //增强for循环,底层实际上使用的是iterator迭代器进行遍历
         System.out.println();
@@ -433,14 +442,12 @@ public class ArraylistDemo {
             System.out.print(str.toLowerCase() + " ");
         }
         System.out.println();
-        System.out.println(ls);
-
 
         //Iterator必须依附于Collection对象，也就是若有一个Iterator对象，必然有一个与之对应的Collection对象；
         //public interface Collection<E> extends Iterable<E>， 所以所有Collection对象都是可迭代的(可遍历的)
         //Iterator就是用来遍历迭代集合的
         System.out.println();
-        Iterator it = ls.iterator();
+        Iterator<String> it = ls.iterator();
         while (it.hasNext()) {
             System.out.print(it.next() + " ");
         }
@@ -558,7 +565,7 @@ public class ArraylistDemo {
         fruit.add(new Orange());
         System.out.println(fruit);
 
-        //List--->array， 无论是否使用泛型都会返回Object[]
+        //List--->array， 无论是否使用泛型都会返回Object[],因为运行时会进行泛型擦除，所以必须用Object数组接收
         Object[] objects1 = fruit.toArray();
         Fruit[] object2 = (Fruit[]) fruit.toArray();
     }

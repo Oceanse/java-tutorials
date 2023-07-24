@@ -6,7 +6,7 @@ package com.demo.oop.inherit.demo1_reuse.demo1;
  *
  * extends 的英文意思是扩展，而不是继承,表现为:
  * 1 直接拥有父类非private的属性和方法，
- *   间接拥有父类private的属性和方法；
+ *   间接拥有父类private的属性和方法，private属性方法也可以脑补到子类，但是只能对其间接读写，比如对于父类private属性，子类可以通过构造器(super)和其他方法进行读写
  *  子类继承父类后，子类就拥有了父类全部的属性和行为，可以把继承过来的属性和方法全部脑补到子类当中；
  *  只不过对于父类私有属性，子类只能间接拥有,也就是子类不能直接操作继承的私有属性，但是可以通过继承父类暴露的getter/setter/constructor等方法间接访问和修改，
  *  也就是绕了一个弯后去操控这些私有属性，所以可以理解为子类间接拥有了父类的私有属性(间接读写)
@@ -17,7 +17,7 @@ package com.demo.oop.inherit.demo1_reuse.demo1;
  * 2 重写父类对象方法：
  * 当父类方法不能满足子类需求(比如toString方法)，可以对父类继承的方法进行重写,重写只是针对方法，不针对属性，重写后子类只拥有重写后的方法
  * In object-oriented terms, overriding means to override the functionality of an existing method.
- * 子类方法和父类方法的    返回值 方法名(参数)     完全相同时候，编译器就会认为子类对父类方法进行了重写，无论带不带有@Override
+ * 子类方法和父类方法的 返回值 方法名(参数) 完全相同时候，编译器就会认为子类对父类方法进行了重写，无论带不带有@Override
  * 重写后方法的权限不能小于被重写方法的权限;
  * 重写后方法抛出的异常不能多于被重写方法；
  * 静态方法不能被覆盖

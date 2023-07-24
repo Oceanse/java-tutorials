@@ -55,6 +55,6 @@ public class Manager extends Employee{
         System.out.println(manager.getName());
         System.out.println(manager.getBonus());
         System.out.println(manager.getSalary());
-        System.out.println(Employee.getNameById(1));
-        System.out.println(Employee.getSalaryById(1));    }
+        System.out.println(Manager.getNameById(1));
+        System.out.println(Manager.getSalaryById(1));    }
 }

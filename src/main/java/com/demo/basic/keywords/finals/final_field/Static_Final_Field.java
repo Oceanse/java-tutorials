@@ -28,7 +28,7 @@ public class Static_Final_Field {
 
 interface Car{
     //这里实际上是public static final String brand=null;
-    String brand=null; //成员常量必须初始化
+    String BRAND=null; //成员常量必须初始化
 }
 
 class BMW implements Car{
@@ -38,6 +38,6 @@ class BMW implements Car{
      * @param brand
      */
     public BMW(String brand) {
-        //this.brand=brand;//cannot assign a value to final variable brand
+        //BMW.BRAND=brand;//cannot assign a value to final variable brand
     }
 }

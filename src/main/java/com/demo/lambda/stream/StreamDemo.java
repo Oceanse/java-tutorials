@@ -10,6 +10,11 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+
+/**
+ * 通过数据源创建Stream---->中间操作---->终止操作
+ * Stream强调计算，集合强调数据
+ */
 public class StreamDemo {
 
     /**
@@ -58,13 +63,11 @@ public class StreamDemo {
          //创建流
         Stream<Employee> employeeStream = employees.stream();
 
-
         //中间操作，遇到终止操作之前，中间操作不会执行任何的处理
         Stream<Employee> filterStream = employeeStream.filter(employee -> {
             System.out.println("中间操作");
             return employee.getAge() > 18;
         });
-
     }
 
     /**
@@ -98,7 +101,8 @@ public class StreamDemo {
 
 
     /**
-     *     limit(n)：获取n个元素
+     * limit(n)：获取n个元素
+     * limit后不需要遍历整个集合，节省时间
      */
     @Test
     public void testLimit(){
@@ -114,7 +118,9 @@ public class StreamDemo {
 
         //中间操作
         Stream<Employee> filterStream = employeeStream.filter(employee ->
-             employee.getAge() > 18
+                {
+                    System.out.println("中间操作");
+                    return employee.getAge() > 25;}
         ).limit(2);
 
         //终止操作
@@ -153,6 +159,11 @@ public class StreamDemo {
     }
 
 
+
+
+
+
+
     /**
      * skip(m)配合limit(n)可实现分页
      */
@@ -176,14 +187,15 @@ public class StreamDemo {
 
         //中间操作
         Stream<Employee> skipStream = employeeStream.skip(5);
+        Stream<Employee> limitStream = skipStream.limit(5);
 
         //终止操作
-        Stream<Employee> limitStream = skipStream.limit(5);
         limitStream.forEach(System.out::println);//等价于filterStream.forEach(employee->System.out.println(employee));
     }
 
 
     /**
+     * 去重
      * distinct：通过流中元素的 hashCode() 和 equals() 去除重复元素，要想实现成功，必须实体类实现重写这两个方法！
      */
     @Test
@@ -267,18 +279,22 @@ public class StreamDemo {
     }
 
 
-
+    /**
+     * 嵌套stream
+     */
     @Test
     public void testMap3() {
         List<String> list = Arrays.asList("aa", "bb");
         //list.stream()返回只是Stream<String>,  然后经过map,流中的每个String转化成了Stream<Character>，所以最后的返回值 是Stream<Stream<Character>>
         //假设流的标记是{}, 那么流中流就是：{ {aa}, {bb} }
         Stream<Stream<Character>> streams = list.stream().map(str -> filterCharacter(str));
-        //stream中包含一系列的stream, 可以想象成外流套内流，外流是Stream<Stream<Character>>类型，内流是Stream<Character>类型
-        streams.forEach(stream->stream.forEach(System.out::println));
+        //stream中包含一系列的stream, 可以想象成外流套内流，
+        streams.forEach(stream->stream.forEach(c-> System.out.println(c)));
 
-        //简写：
-        list.stream().map(str -> filterCharacter(str)).forEach(System.out::println);
+        //方法引用
+        System.out.println();
+        Stream<Stream<Character>> streams2 = list.stream().map(str -> filterCharacter(str));
+        streams2.forEach(stream-> stream.forEach(System.out::println));
     }
 
     /**
@@ -302,7 +318,8 @@ public class StreamDemo {
     public void testFlatMap() {
         List<String> list = Arrays.asList("aa", "bb");
         //list.stream()返回只是Stream<String>,  然后经过flatMap,将流中的每个值都换成另一个流，然后把所有流连接成一个流，
-        // 个人理解 flatMap完成了Stream<Stream<Character>>到<Stream<Character>>的转换，也就是把众多的流合并成了一个流，{ {aa}, {bb} }------->{aa,bb}
+        //flatMap的返回值是Stream类型
+        // 个人理解 flatMap完成了Stream<Stream<Character>>到Stream<Character>的转换，也就是把众多的流合并成了一个流，{ {aa}, {bb} }------->{aa,bb}
         Stream<Character> streams = list.stream().flatMap(str -> filterCharacter(str));
         //stream中包含一系列的stream, 可以想象成外流套内流，齐总的外流是Stream<Stream<Character>>类型，内流是Stream<Character>类型
         streams.forEach(System.out::println);

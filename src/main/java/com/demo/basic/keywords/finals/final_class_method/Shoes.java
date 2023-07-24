@@ -15,7 +15,7 @@ public class Shoes {
     }
 
     private final void function2() {
-        System.out.println("xxx.....");
+        System.out.println("run.....");
     }
 
     public String showMaterial() {
@@ -46,16 +46,6 @@ final class SportShoes extends Shoes {
     */
 
 
-
-
-    /*只是添加@Override也会被认为是重写
-    @Override
-    public void function(){
-    }
-    */
-
-
-
     /*
     不加 @Override也会认为是重写，编译报错
     public void function(){
@@ -69,8 +59,9 @@ final class SportShoes extends Shoes {
      * 法，也不是方法重写，只是重新定义了一个新方法。因此，即使使用final修饰一个private访问权限的
      * 方法，依然可以在其子类中定义与该方法具有相同方法名、和同形参列表、相同返回值类型的方法。
      */
+   // @Override //Method does not override method from its superclass
     private  void function2() {
-        System.out.println("xxx.....");
+        System.out.println("dance.....");
     }
 
 

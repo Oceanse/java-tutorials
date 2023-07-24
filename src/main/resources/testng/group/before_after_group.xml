@@ -9,7 +9,7 @@
         </groups>
 
         <classes>
-            <class name="com.demo.testNG.group.Before_AfterGroup" />
+            <class name="com.demo.others.testNG.group.Before_AfterGroup" />
         </classes>
     </test>
 </suite>

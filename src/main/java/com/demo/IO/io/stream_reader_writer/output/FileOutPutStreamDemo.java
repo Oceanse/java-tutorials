@@ -3,6 +3,7 @@ package com.demo.IO.io.stream_reader_writer.output;
 import org.testng.annotations.Test;
 
 import java.io.*;
+import java.nio.charset.Charset;
 
 
 /**
@@ -32,12 +33,8 @@ import java.io.*;
  *
  *
  * 注意：
- *一切数据(文本、图片、音频、视频)底层都是以二进制数字存储，一个一个的字节，传输的时候也是如此。所以字节流可以传输任何数据。所以再操作流的时候要注意，
- * 无论使用什么样的流对象，底层传输始终是二进制数据。
-
-
-
-
+ *一切数据(文本、图片、音频、视频)底层都是以二进制数字存储，一个一个的字节，传输的时候也是如此。所以字节流可以传输任何数据。
+ * 所以再操作流的时候要注意，无论使用什么样的流对象，底层传输始终是二进制数据。
 
 
  * FileOutputStream:文件输出流，用于将内存中的数据写到文件的输出流
@@ -80,23 +77,23 @@ public class FileOutPutStreamDemo {
      */
     @Test
     public void test() {
-        //文件不存在可以被创建，但前提文件所在的目录必须存在
-        File f = new File("testResource\\test.txt");
+
+        File f = new File("testResource/lyric");
         FileOutputStream fos = null;
         try {
-            //fos指向被写文件, 文件不存在会在工程根目录下被创建,如果存在，会清空这个文件的数据
+            //fos指向被写文件, 文件不存在会在工程根目录下被创建, 但前提是文件所在的父目录必须存在
+            //如果文件存在，会清空这个文件的数据
             //FileOutputStream(File file) throws FileNotFoundException 文件字节输出流指向的文件可能不存再，所以可能报FileNotFoundException
             fos = new FileOutputStream(f);
 
             //通过FileOutputStream向文件写入数据
-            //getBytes(): Encodes this {@code String} into a sequence of bytes using the platform's default charset
-            //把getBytes()后的编码通过流管道写入文件中，文件要用getBytes()使用的编码规则才能正确显示内容
-            //从指定的字节数组写入此输出流，然后输出流流向文件; 字节数组的本质就是编码，也就是把编码写入到了文件，文件会根据自己的编码方式进行解码展示
-            fos.write("Some letters will be written to test.txt".getBytes());
-            // 换行符的ASCII码值为10,这里吧换行符的编码写入到了文件
-            fos.write(10);
-            fos.write(new byte[]{97,98,99});
-            //强制写到硬盘
+            //把指定的字节/字节数组写入到输出流，然后输出流流向文件;
+            //字节数组的本质就是编码，也就是把编码写入到了文件，文件会根据自己的编码方式进行解码展示
+            fos.write(new byte[]{71,79,68});//GOD
+            fos.write(10); //换行符的ASCII码值为10
+            fos.write("You raise me up to more than I can be".getBytes(Charset.defaultCharset()));
+            fos.write(10);//再次写入换行符，方便后面追加内容
+            //强制写到硬盘，OutputStream的flush方法是空实现，FileOutputStream没有重写父类OutputStream的flush方法，所以FileOutputStream.flush()实际是多余的
             fos.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -118,12 +115,12 @@ public class FileOutPutStreamDemo {
      */
     @Test
     public void test2() {
-        File f = new File("testResource\\test.txt");
+        String filePath ="testResource/lyric";
         //fos指向被写文件,文件不存在会在工程根目录下被创建; 如果有这个文件，在这个文件后面追加数据
-        try (FileOutputStream fos = new FileOutputStream(f, true)) {
+        try (FileOutputStream fos = new FileOutputStream(filePath, true)) {
+            String lyric="You raise me up,so I can stand on mountains";
             //从指定的字节数组的一部分内容写入此输出流，然后输出流流向文件
-            fos.write("012345".getBytes(), 0, 4);
-
+            fos.write(lyric.getBytes(), 0, lyric.length());
         } catch (IOException e) {
             e.printStackTrace();
         } 

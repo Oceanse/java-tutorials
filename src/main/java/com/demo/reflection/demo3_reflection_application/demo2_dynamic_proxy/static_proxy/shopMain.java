@@ -14,7 +14,14 @@ public class shopMain {
          //创建代理的商家淘宝对象
         TaoBao taoBao = new TaoBao();
         //我只向淘宝买一件产品,得到报价
-        float price = taoBao.sell(2);
-        System.out.println("购买一件产品.淘宝的报价为: " + price);
+        double price = taoBao.sell(1000);
+        System.out.println("购买1000件产品.淘宝的报价为: " + price);
+
+
+        //创建代理的商家淘宝对象
+        JD jd = new JD();
+        //我只向淘宝买一件产品,得到报价
+        double price2 = jd.sell(1000);
+        System.out.println("购买1000件产品.京东的报价为: " + price2);
     }
 }

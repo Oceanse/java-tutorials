@@ -1,26 +1,17 @@
 package com.demo.basic.method.returns;
-
+import org.testng.annotations.Test;
+import java.util.Scanner;
 
 /**
  * return 用在方法中有两个作用：
  *   1 return 返回值;  表示返回方法结果；
- *   2 return;  表示方法执行结束，跳出方法；如果方法无需返回值但又因为方法内部业务逻辑需要结束运行， 则可以只用return来跳出方法, 不需要返回任何数据
- *     return;语句只能出现在void方法中，因为它表示结束或者退出方法，不会返回数据
+ *   2 return; 表示方法执行结束，跳出方法；如果方法无需返回值但又因为方法内部业务逻辑需要结束运行， 则可以只用return来跳出方法, 不需要返回任何数据
+ *     return; 语句只能出现在void方法中，因为它表示结束或者退出方法，不会返回数据； void方法的结尾处都会默认有一个隐式的 return；
  *
  *  注意：
- *  return;或者 return 返回值; 我们可以称之为return语句，return语句只要被执行，所在方法就会执行结束，所以return语句后面不能跟其他语句
+ *  return; 或者 return 返回值; 我们可以称之为return语句，return语句只要被执行，所在方法就会执行结束，所以return语句后面不能跟其他语句
  * */
-
-import com.demo.basic.code_block.construct_block.demo1.Person;
-import org.testng.annotations.Test;
-
-import java.util.Scanner;
-
-/**
- * @author epanhai
- */
 public class ReturnDemo {
-
 
 
     /**
@@ -46,7 +37,7 @@ public class ReturnDemo {
      * @return
      */
     public static double returnEnd(){
-        return 1;
+        return 1.0;
         //System.out.println();
     }
 
@@ -79,19 +70,6 @@ public class ReturnDemo {
 
 
 
-    /**
-     * null也是一种引用类型数据，或者说null属于任何引用类型数据
-     * @return
-     */
-    public static Object returnNull(){
-        return null;
-    }
-    public static String returnNull2(){
-        return null;
-    }
-    public static Person returnNull3(){
-        return null;
-    }
 
 
     /**
@@ -99,12 +77,12 @@ public class ReturnDemo {
      *  return;语句只能出现在void方法中，因为它表示结束或者退出方法，不会返回数据
      */
     public static void printNumber() {
+        Scanner scanner =new Scanner(System.in);
         while(true) {
             System.out.println("Please input a number:");
-            Scanner scanner =new Scanner(System.in);
             int num = scanner.nextInt();
             if(num==0){
-                return;//方法执行结束，用return;关键字跳出方法
+                return;//方法执行结束，用return;
             }
             System.out.println(num);
         }
@@ -115,7 +93,7 @@ public class ReturnDemo {
      * return; 语句只能出现在void方法中，因为它表示结束或者退出方法，不会返回数据
      * return; 表示已经退出方法， 所以后面不能跟语句
      */
-    public static void test(){
+    public  void testReturn(){
         return;
         //后面不能跟语句
     }
@@ -141,9 +119,7 @@ public class ReturnDemo {
 
 
     public static void main(String[] args) {
-        test();
-        System.out.println(123);
-        //printNumber();
+        printNumber();
     }
 
 

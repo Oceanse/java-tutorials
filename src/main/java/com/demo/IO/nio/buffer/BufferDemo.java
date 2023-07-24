@@ -271,7 +271,7 @@ public class BufferDemo {
 
         char c1 = (char) byteBuffer.get();
         System.out.println("c1=" + c1);
-        //position是即将读取的下个字节的索引，读完第一个字节后position=2，说明下个即将读取的字节索引是2
+        //position是即将读取的下个字节的索引，读完第一个字节后position=1，说明下个即将读取的字节索引是1
         System.out.println("读取第1个字节后position：" + byteBuffer.position());
         System.out.println("读取第1个字节后limit：" + byteBuffer.limit());
         System.out.println();

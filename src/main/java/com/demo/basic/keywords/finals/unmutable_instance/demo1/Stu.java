@@ -21,14 +21,15 @@ package com.demo.basic.keywords.finals.unmutable_instance.demo1;
  *
  */
 public class Stu {
-    private final int id;
+
+    private final int ID;
 
     public Stu(int id) {//构造方法中初始化实例属性，这里是第一次赋值，之后该变量的值不能再改变
-        this.id = id;
+        this.ID = id;
     }
 
     public int getId() {
-        return id;
+        return ID;
     }
 
 

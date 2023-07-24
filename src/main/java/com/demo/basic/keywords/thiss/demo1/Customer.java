@@ -6,7 +6,7 @@ package com.demo.basic.keywords.thiss.demo1;
  * 1 this用在构造函数中时候(this.属性，this.方法)：
  * A 表示正在创建的当前类对象
  * B 调用本类的重载构造方法
- * 2 this用在普通方法(this.属性，this.方法， return this)表示当前类对象的引用，也就是调用当前方法的对象的引用
+ * 2 this用在普通方法(this.属性，this.方法， 参数、返回值)表示当前类对象的引用，也就是调用当前方法的对象的引用
  * <p>
  * this不能出现在static方法中，因为调用当前类方法的是类，此时可能还不存在对象，所以this也无法代指当前对象
  */
@@ -60,7 +60,6 @@ public class Customer {
 
 
     public static void main(String[] args) {
-
         Customer xm = new Customer("xm");
         Customer xh = new Customer("xh");
         xm.shopping();//shopping中的this对应xm
@@ -69,6 +68,8 @@ public class Customer {
         xh.printInfo();
         xm.printInfo();
 
+        System.out.println(xm.getInstance());
+        System.out.println(xh.getInstance());
         System.out.println(xm.getInstance().getName());
         System.out.println(xh.getInstance().getName());
 

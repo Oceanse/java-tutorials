@@ -11,7 +11,7 @@ public class Computer {
 
 
     /**
-     * 双惨构造函数， 这里的this表示正在创建的当前类对象的引用
+     * 这里的this表示正在创建的当前类对象的引用
      *
      * @param brand
      * @param price
@@ -56,6 +56,6 @@ public class Computer {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Computer("HP", 10000, "CORE i5").getComputer().toString());
+        System.out.println(new Computer("HP", 10000, "CORE i5").getComputer());
     }
 }

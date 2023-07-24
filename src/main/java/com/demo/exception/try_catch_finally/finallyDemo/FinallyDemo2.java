@@ -52,7 +52,6 @@ public class FinallyDemo2 {
 
     @Test
     public void test2() {
-
         String path = "none";
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             br.readLine();

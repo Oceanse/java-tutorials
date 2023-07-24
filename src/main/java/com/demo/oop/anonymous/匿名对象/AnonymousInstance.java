@@ -12,11 +12,11 @@ import org.testng.annotations.Test;
 public class AnonymousInstance {
 
     void fact(int n) {
-        int fact = 1;
+        int result = 1;
         for (int i = 1; i <= n; i++) {
-            fact = fact * i;
+            result = result * i;
         }
-        System.out.println("factorial is " + fact);
+        System.out.println("factorial is " + result);
     }
 
     @Test
@@ -34,6 +34,9 @@ public class AnonymousInstance {
         showSinger(new PopularSinger());//匿名对象作为实参传递给一个方法
     }
 
+    /**
+     * 个人理解：匿名内部类兼具了匿名内部类和匿名对象的特征
+     */
     @Test
     public static void test3() {
         showSinger(new Singer() {

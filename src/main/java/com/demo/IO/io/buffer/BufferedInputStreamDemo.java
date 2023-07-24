@@ -47,8 +47,7 @@ public class BufferedInputStreamDemo {
             //读取数组中的有效长度,指定解码规则，避免乱码
             System.out.print(new String(b,0,len,"UTF-8"));
         }
-        bis.close();//对于包装刘来说，只需要关闭最层的流就行，内层的流会自动关闭
-
+        bis.close();//对于包装流来说，只需要关闭最层的流就行，内层的流会自动关闭
     }
 
     @Test

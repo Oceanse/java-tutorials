@@ -1,8 +1,5 @@
 package com.demo.lambda.stream;
 
-import com.demo.collection_map.model.comparable_model.Students;
-import com.demo.collection_map.model.comparable_model.Students3;
-import io.cucumber.java.sl.In;
 import org.testng.annotations.Test;
 
 import java.util.*;
@@ -64,14 +61,20 @@ public class StreamDemo2 {
                 new Employee("ashly", 36, 6666.66),
                 new Employee("sherry", 12, 8888.88)
         );
-        Stream<Double> doubleStream = employees.stream().map(employee -> employee.getSalary());
-        Double max = doubleStream.max((d1, d2) -> d1.compareTo(d2)).get();
-        System.out.println("max = " + max);
+        Employee employeeOfMaxSalary = employees.stream().max((e1,e2)->Double.compare(e1.getSalary(),e2.getSalary())).get();
+        System.out.println("employeeOfMaxSalary = " + employeeOfMaxSalary);
+        Employee employeeOfMaxSalary2 = employees.stream().max((e1, e2) -> Double.valueOf(e1.getSalary()).compareTo(e2.getSalary())).get();
+        System.out.println("employeeOfMaxSalary2 = " + employeeOfMaxSalary2);
 
-        //方法引用
-        Stream<Double> doubleStream1 = employees.stream().map(Employee::getSalary);
-        Double max2 = doubleStream1.max(Double::compareTo).get();
-        System.out.println("max2 = " + max2);
+        Double maxSalary = employees.stream().map(e -> e.getSalary()).max((d1, d2) -> d1.compareTo(d2)).get();
+        System.out.println("maxSalary = " + maxSalary);
+       Double maxSalary2 = employees.stream().map(employee -> employee.getSalary()).max(Double::compareTo).get();
+        System.out.println("maxSalary2 = " + maxSalary2);
+
+       Double maxSalary3 = employees.stream().map(employee -> employee.getSalary()).max((d1,d2)->Double.compare(d1,d2)).get();
+        System.out.println("maxSalary3 = " + maxSalary3);
+       Double maxSalary4 = employees.stream().map(employee -> employee.getSalary()).max(Double::compare).get();
+        System.out.println("maxSalary4 = " + maxSalary4);
     }
 
 
@@ -119,7 +122,7 @@ public class StreamDemo2 {
 
     /**
      * Optional<T> reduce(BinaryOperator<T> accumulator)：
-     * 第一次执行时，accumulator函数的第一个参数为流中的第一个元素，第二个参数为流中元素的第二个元素；
+     * 第一次执行时，accumulator函数的第一个参数为流中的第一个元素，第二个参数为流中的第二个元素；
      * 第二次执行时，第一个参数为第一次函数执行的结果，第二个参数为流中的第三个元素；依次类推。
      * 简单理解为：可以将流中元素反复结合起来，得到一个值
      */
@@ -138,8 +141,9 @@ public class StreamDemo2 {
     public void testReduce3() {
         // 求和
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
-        //从0开始，0作为x，先取y=1，执行x+y=1，再将x作为1，y取流中下一个元素2，一直执行下去
         //这里返回值是Integer，是因为有起始值0
+        //第一次执行时,x1=0(起始值),x2=1(流中的第一个元素)
+        //第二次执行时，x1=第一次函数执行的结果，x2=流中的第二个元素；依次类推。
         Integer sum = list.stream().reduce(0, (x1, x2) -> x1 + x2);
         System.out.println("sum = " + sum);
 

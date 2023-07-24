@@ -14,7 +14,7 @@ import java.util.Arrays;
  * 常见元注解：
  * @author epanhai
  * @Retention：英文意为保留期或者存活时间的意思 它的取值如下：
- * RetentionPolicy.SOURCE 注解只在源码阶段保留，在编译器进行语法检查时会被用到，编译成字节码文件时它将被丢弃忽： 比如@Override
+ * RetentionPolicy.SOURCE 注解只在源码阶段保留，在编译器进行语法检查时会被用到，编译成字节码文件时它将被丢弃，比如@Override
  * RetentionPolicy.CLASS 注解只被保留到编译进行的时候，它并不会被加载到 JVM 中。
  * RetentionPolicy.RUNTIME 注解可以保留到程序运行的时候，它会被加载进入到 JVM 中，所以在程序运行时可以获取到它们。
  *
@@ -156,7 +156,6 @@ public class TestDemo {
     public void testAnnotation3() throws NoSuchMethodException {
         Method testAnnotation3 = TestDemo.class.getDeclaredMethod("testAnnotation3");
         MethodAnnotation2 annotation = testAnnotation3.getAnnotation(MethodAnnotation2.class);
-        String desc = annotation.value();
         System.out.println(annotation);
         System.out.println(annotation.value());
     }

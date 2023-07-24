@@ -15,9 +15,9 @@ public class BufferedOutputStreamDemo {
      * BufferedOutputStream(OutputStream out)： 创建一个新的缓冲输出流
      */
     @Test
-    public void test() {
+    public void testBufferedOutputStream() {
         //文件不存在会在工程根目录下被创建,如果有这个文件，会清空这个文件的数据
-        File f = new File("testResource\\test.txt");
+        File f = new File("testResource/test.txt");
         FileOutputStream fos = null;
         BufferedOutputStream bos = null;
         try {
@@ -25,7 +25,8 @@ public class BufferedOutputStreamDemo {
             fos = new FileOutputStream(f, true);
             bos = new BufferedOutputStream(fos);
             //从指定的字节数组写入此输出流，然后输出流流向文件
-            bos.write("asdfghj".getBytes("utf-8"), 0, 4);
+            String contents="BufferedOutputStream practice...";
+            bos.write(contents.getBytes("utf-8"), 0, contents.length()-3);
             bos.flush();
 
         } catch (IOException e) {

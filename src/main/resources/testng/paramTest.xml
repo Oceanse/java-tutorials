@@ -5,7 +5,7 @@
     <parameter name="width" value="5" />
     <test name="ParameterizedTest">
         <classes>
-            <class name="com.demo.testNG.ParameterizedTest">
+            <class name="com.demo.others.testNG.ParameterizedTest">
             <methods>
                 <include name="verifyData2" />
                 <include name="verifyData3" />

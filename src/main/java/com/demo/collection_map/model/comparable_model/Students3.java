@@ -1,11 +1,11 @@
 package com.demo.collection_map.model.comparable_model;
 
-import java.util.TreeSet;
-
 /**
+ * 自然排序
+ *
  * @author epanhai
  */
-public class Students3 implements Comparable<Students3>{
+public class Students3 implements Comparable<Students3> {
     private String name;
     private int age;
 
@@ -42,10 +42,8 @@ public class Students3 implements Comparable<Students3>{
      */
     @Override
     public int compareTo(Students3 o) {
-        int num = this.age - o.age;
-        // String类里面已经重写了compareTo方法
-        // int compareTo(String anotherString)  按字典顺序比较两个字符串
-        return num == 0 ? this.name.compareTo(o.name) : num;
+        int num = this.name.compareToIgnoreCase(o.name);
+        return num == 0 ? Integer.compare(this.age, o.age) : num;
     }
 
 

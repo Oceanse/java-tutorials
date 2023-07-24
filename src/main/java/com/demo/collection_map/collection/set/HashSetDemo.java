@@ -1,11 +1,10 @@
 package com.demo.collection_map.collection.set;
 
-import com.demo.pojo.Resource;
+import com.demo.others.pojo.Resource;
 import org.testng.annotations.Test;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 
 /**
  * hashcode(哈希码)：系统可以根据哈希码计算出对象在哈希表中的存储位置(哈希表可以简单理解为数组中+链表)

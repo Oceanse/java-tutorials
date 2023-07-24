@@ -22,10 +22,9 @@ public class ErrorRedirect {
     @Test
     public static void test() {
         System.err.println("这是一条");
-        System.out.println("正常");
-        System.out.println("信息");
-        System.out.println("的输出");
         System.err.println("错误信息");
+        System.out.println("这是一条正常");
+        System.out.println("信息的输出");
     }
 
     @Test

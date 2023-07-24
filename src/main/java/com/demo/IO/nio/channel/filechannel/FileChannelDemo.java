@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets;
  *  通道使用起来跟Stream比较像，可以读取数据到Buffer中，也可以把Buffer中的数据写入通道。
  *  当然，也有区别，主要体现在如下两点：
  * 1：一个通道，既可以读又可以写，而一个Stream是单向的（所以分 InputStream 和 OutputStream）
- * 2： 通道有非阻塞I/O模式
+ * 2：通道有非阻塞I/O模式
  *
  * Java NIO中最常用的通道实现是如下几个，可以看出跟传统的 I/O 操作类是一一对应的。
  * FileChannel：读写文件
@@ -56,9 +56,9 @@ public class FileChannelDemo {
             // 切换成读模式，读取缓冲区数据；byteBuffer.array()是将缓冲区转化成数组
             byteBuffer.flip();
             System.out.print(new String(byteBuffer.array(), 0, readCount));
+            //每当要向缓存区写数据时，就调用clear“切换成写模式”。
+            byteBuffer.clear();
         }
-
-
     }
 
 

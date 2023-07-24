@@ -4,7 +4,8 @@ import org.testng.annotations.Test;
 
 
 /**
- * 变量名=表达式/常量值
+ * 变量名=常量值/变量/表达式
+ * 等式左边只能是变量，也就是需要一个变量存储空间来存储数据
  *
  * 赋值运算符分类： 基本赋值运算符=和扩展赋值运算符+= -+ *= /= %=
  *
@@ -20,31 +21,40 @@ import org.testng.annotations.Test;
  * eg3: 表达式a>0 ? "positive" : a<0 ? "negative" : "zero"   三目运算是从右向左结合（右结合）的，那么该表达式被解析为a>0 ? "positive" : (a<0 ? "negative" : "zero")
  * 赋值表达式遵循右结合：先执行右边的表达式，再将结果赋值给左边变量
  *
- *
  * 赋值表达式同其他表达式一样具有自己的值，赋值表达式的值就是最左边变量存储的值
  * */
 
 public class AssignmentOperatorDemo {
 
     @Test
-    public void test(){
+    public void testAssignmentOperator(){
+        int a=1;
+        int b=a;//把变量a存储的数据复制一份，存储到变量b中
+        System.out.println("b = " + b);
+        a=2;//修改a变量的值不会影响变量b的值
+        System.out.println("b = " + b);
+    }
+
+
+    @Test
+    public void testAssignmentOperator2(){
         int i,j,k;
 
         //赋值表达式的值就是左边变量存储的值
         System.out.println(k=j=i=1);
-
         //起到了多个变量被同时赋值的效果，等价于int i=1,j=1,k=1
-        System.out.println(i);
         System.out.println(k);
+        System.out.println(i);
         System.out.println(j);
     }
 
 
     /**
      * 赋值运算符右结合
+     * 赋值表达式的值就是最左边变量存储的值
      */
     @Test
-    public void test2(){
+    public void testAssignmentOperator3(){
         int i,j;
         System.out.println(j=i=1);
         //赋值运算符右结合
@@ -58,17 +68,18 @@ public class AssignmentOperatorDemo {
     @Test
     public void test3() {
         byte b = 0;
-        b += 22555;
-        //b += 22555隐含了一个强制类型转换,将22555转换为byte，然后相加赋值给byte类型变量s,此过程不改变变量的数据类型(+=左边的变量)实现运算
+        b += 22555;//b += 22555隐含了一个强制类型转换,将最终的结果转换为byte，然后赋值给byte类型变量b,此过程不改变变量的数据类型(+=左边的变量)实现运算
         System.out.println("b="+b);
         //相当于
-        byte b2=(byte)22555+0;
+        byte b2=(byte)(22555+0);
         System.out.println("b2="+b2);
 
-        int a=2;
+        int i=2;
         double d=2.1;
-        System.out.println(a+=0.1);  //隐含了一个强制类型转换,变量a和字面值0.1类型不一致，所以0.1->0,变量a类型不变
-        System.out.println(d+=0.1); //变量d和字面值0.1类型一致，所以不需要强转
+        i+=0.1;//变量a和字面值0.1类型不一致，隐含了一个强制类型转换, 等价于int a=(int)(a+0.1)
+        d+=0.1;//变量d和字面值0.1类型一致，所以不需要强转
+        System.out.println("i="+i);  //隐含了一个强制类型转换,变量a和字面值0.1类型不一致，所以0.1->0,变量a类型不变
+        System.out.println("d="+d); //变量d和字面值0.1类型一致，所以不需要强转
     }
 
     @Test
@@ -78,6 +89,19 @@ public class AssignmentOperatorDemo {
 
         Object o1=new Object();//这里o1保存的是堆内存地址
         Object o2=o1;//这里重新分配一块栈内存,并把变量o1保存的地址值传递给了变量o2
+    }
+
+
+    /**
+     * 扩展赋值运算符是右结合运算符
+     */
+    @Test
+    public void test5(){
+        int b=1;
+        int a=1;
+        b+=a+=2;//等价于b+=(a+=2)
+        System.out.println("a = " + a);
+        System.out.println("b = " + b);
     }
 
 }

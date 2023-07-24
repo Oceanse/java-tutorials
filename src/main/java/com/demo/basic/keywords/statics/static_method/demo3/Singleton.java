@@ -16,6 +16,7 @@ public class Singleton {
 
     /**
      * 构造器私有，保证不能在类的外部创建对象
+     *
      * @param name
      */
     private Singleton(String name) {
@@ -24,11 +25,16 @@ public class Singleton {
 
     /**
      * 共有的静态的访问点
+     *
      * @return
      */
-    public static Singleton getInstance(){
-        if(singleton==null){
-         singleton=new Singleton("ocean");
+    public static Singleton getInstance() {
+        if (singleton == null) {
+            synchronized (Singleton.class) {
+                if (singleton == null) {
+                    singleton = new Singleton("ocean");
+                }
+            }
         }
         return singleton;
     }

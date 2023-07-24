@@ -42,13 +42,11 @@ class EngineB implements Iengine{
 
 /**
  * 简单工厂模式：把生成实现类(具体引擎)的逻辑集中在工厂类当中
+ * 接口类型作为返回值
  */
 class EngineFactory{
 
     public static Iengine getEngine(String engineBrand){
-        if(engineBrand==null){
-            return null;
-        }
         if(engineBrand=="A"){
             return new EngineA();
         }else if(engineBrand=="B"){
@@ -66,6 +64,7 @@ class Car{
 
     /**
      * Car和engine是has-a关系，所以可以组合
+     * 接口类型作为组合类或者成员变量
      */
     Iengine e;
     public Car(Iengine e) {

@@ -1,7 +1,10 @@
 package com.demo.exception.try_catch_finally.finallyDemo;
 
 
+import com.demo.exception.custom_execption.MyException;
 import org.testng.annotations.Test;
+
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * finally
@@ -11,12 +14,30 @@ import org.testng.annotations.Test;
  * <p>
  *
  *  注意：
- *  1 如果在执行finally退出了jvm( System.exit(0)),那么后面的finally不会被执行;
+ *  1 如果在执行finally退出了jvm( System.exit()),那么后面的finally不会被执行;
  *  2 try后面至少跟catch或者finally
  *  3 try-catch-finally中异常没被程序处理的话，最终还是会jvm来处理，因此finally后面的代码可能也不会被执行
+ *  4 try或者catch块中的return或者throw语句，只有finally块执行完成之后，才会回来执行return或者throw语句
  *
  */
 public class FinallyDemo {
+
+    /**
+     * try-finally可用在不需要捕获异常的代码，可以保证资源在使用后被关闭
+     * 例如IO流中执行完相应操作后，关闭相应资源；
+     * 使用Lock对象保证线程同步，通过finally可以保证锁会被释放；
+     * 数据库连接代码时，关闭连接操作等等。
+     */
+    @Test
+    public static void testFinally() {
+        //以Lock加锁为例，演示try-finally
+        ReentrantLock lock = new ReentrantLock();
+        try {
+            //需要加锁的代码
+        } finally {
+            lock.unlock(); //保证锁一定被释放
+        }
+    }
 
 
     /**
@@ -125,7 +146,19 @@ public class FinallyDemo {
 
 
     @Test
-    public void test4_2() {
+    public void test4_2() throws MyException {
+        try {
+            System.out.println("try block is executed");
+            MyException ex = new MyException("read file failed.");
+            throw ex; //执行throw之前一定会先执行finally代码块，然后再回到这里执行return
+        } finally {
+            System.out.println("finally block is always executed");
+        }
+    }
+
+
+    @Test
+    public void test4_3() {
         int i=call();
         System.out.println(i);
 
@@ -148,7 +181,7 @@ public class FinallyDemo {
 
 
     @Test
-    public void test4_3() {
+    public void test4_4() {
         try {
             System.out.println("try block is executed");
             System.exit(1);//在try或者catch中使用System.exit(1)退出虚拟机时候， finally代码块会失去执行机会

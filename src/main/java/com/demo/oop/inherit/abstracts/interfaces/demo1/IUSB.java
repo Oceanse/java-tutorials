@@ -17,7 +17,7 @@ package com.demo.oop.inherit.abstracts.interfaces.demo1;
    可以实现项目分层，降低接口实现类和调用者之间的耦合度，提高可扩展性；比如想增加某个子类时候，只需要这个
    类实现接口规范即可
 
- 总结：接口是实现类和调用者之间的过渡，面向接口去设计实现和调用
+ 总结：接口是实现类和调用者之间的过渡，把实现类和接口解耦，面向接口去设计实现和调用
 
 
 
@@ -37,7 +37,7 @@ public abstract 返回值类型 方法名(参数)     =====>     返回值类型
 
  JDK8 开始，支持在接口 Interface 中定义 default 方法。default 方法只能出现在接口 Interface 中。
  接口中被 default 修饰的方法被称为默认方法，实现此接口的类如果没 Override 此方法，则直接继承这个方法，不再强制必须实现此方法。
-java类可以implements多个接口，接口可以extends多个接口
+ java类可以implements多个接口，接口可以extends多个接口
 
 案例1：
 我们知道，如果某个设备需要向电脑中读取或者写入某些东西，这些设备一般都是采用USB方式与电脑连接的，
@@ -104,6 +104,7 @@ class Tests{
 
     /**
      * 面向接口调用
+     * 接口类型作为参数
      * @param usb
      */
     public static void test( IUSB usb){

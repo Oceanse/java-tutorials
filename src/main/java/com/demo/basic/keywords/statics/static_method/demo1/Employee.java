@@ -9,7 +9,8 @@ import org.testng.annotations.Test;
  * 比如name是成员变量，那么不同对象具有不同的name, getName应该是实例方法；nation是静态属性，所有的对象具有相同的nation, getNation应该是静态方法
  * <p>
  * 用途：
- * 静态方法适合工具类中方法的定义，方便编程使用；比如文件操作，日期处理，数值处理
+ * 静态方法适合工具类方法的定义，方便编程使用；比如文件操作，日期处理，数值处理
+ * 静态方法适合工厂类方法的定义
  * 静态方法适合入口方法的定义；比如单例模式，因为从外部拿不到构造函数，所有定义一个静态的方法获取对象非常有必要；
  * <p>
  * 使用方式：
@@ -22,6 +23,7 @@ import org.testng.annotations.Test;
  * 1 静态方法只能访问调用静态成员和方法，不能直接访问或者通过this/super访问调用普通的非静态的方法和变量；（非静态方法可以任意的调用静态方法/变量）
  * 2 静态方法内部可以调用一种特殊的实例方法：构造方法，进而也可以通过构造方法产生的对象访问实例方法或者实例属性
  * 3 静态方法内部不能使用this和super关键字（静态方法属于类级别，此时可能还没有对象，故不能使用(this/super属于对象级别)
+ *
  * @author epanhai
  * <p>
  */
@@ -32,6 +34,7 @@ public class Employee {
     private String role;
     private String department;
     private static String company="Alibaba";
+    private static int nextId;
 
     public Employee() {
     }
@@ -39,15 +42,15 @@ public class Employee {
     /**
      * 静态属性一般不出现在构造函数中
      * @param name
-     * @param eid
      * @param role
      * @param department
      */
-    public Employee(String name, double eid, String role, String department) {
+    public Employee(String name, String role, String department) {
         this.name = name;
-        this.eid = eid;
+        this.eid = nextId;
         this.role = role;
         this.department = department;
+        nextId++;
     }
 
     /**
@@ -137,25 +140,23 @@ public class Employee {
     public static void test() {
         //通过类访问静态方法
         Employee.getCompany();
-        //通过对象访问静态方法，本质还是通过当前对象的类名进行调用
+        //通过对象访问静态方法，本质还是通过当前对象的类名进行调用,编译器会将其优化为类名调用
         new Employee().getCompany();
-        //调用本类的静态方法时候可省略类名，编译器会从当前类中找这个方法
+        //调用本类的静态方法时候可省略类名，编译器会从当前类中找这个方法，将其优化为类名调用
         getCompany();
 
         //通过类访问静态变量
         String cp = Employee.company;
-        //通过对象访问静态变量，本质还是通过当前对象的类名进行调用
+        //通过对象访问静态变量，本质还是通过当前对象的类名进行调用，编译器会将其优化为类名调用
         String company2 = new Employee().company;
-        //调用本类的静态属性时候可省略类名，编译器会从当前类中找这个属性
+        //调用本类的静态属性时候可省略类名，编译器会从当前类中找这个属性，会将其优化为类名调用
         String company3 = company;
     }
 
 
     /**
-     * 静态方法内部不能使用this和super关键字（静态方法属于类级别，此时可能还没有对象，故不能使用(this/super属于对象级别)
-     * this代表调用test4方法的当前对象，test4方法在执行时候可能还没有产生对象，所以this.test()或者this.PI会报错
-     * <p>
-     * 静态方法不能直接访问或者通过this/super访问实例变量和实例方法，
+     * 静态方法内部不能使用this和super关键字访问实例变量和实例方法，静态方法属于类级别，此时可能还没有对象，故不能使用(this/super属于对象级别)
+     * this代表调用test2方法的当前对象，test2方法在执行时候可能还没有产生对象
      * 但是静态方法可以访问一种特殊的实例方法：构造方法，进而也可以通过构造方法产生的对象访问实例方法或者实例属性
      */
     @Test
@@ -166,14 +167,6 @@ public class Employee {
         //System.out.println(super.toString());
     }
 
-
-    /**
-     * 静态方法只能访问调用静态成员和方法，不能直接访问或者通过this/super访问实例变量和实例方法，
-     * 这里直接访问getEid()就等价于this.getEid(), 因为此时test2_2方法在执行时候可能还没有产生对象，所以直接访问getEid()会报错
-     */
-    public static void test2_2() {
-        //getEid(); //等价于this.getEid()
-    }
 
     /**
      * 静态方法内部可以调用构造方法来new对象

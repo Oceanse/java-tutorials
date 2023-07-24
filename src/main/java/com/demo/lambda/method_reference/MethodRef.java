@@ -24,9 +24,8 @@ public class MethodRef {
     @Test
     public void instanceMethodReference() {
         //lambda体只有一条语句，花括号和分号可以省略
-        //lambda体的功能已经有现成的实例方法 void println(String x) 实现，这里要实现的抽象方法是void accept(String t), 两者的函数列表和返回值类型保持一致，所以可以使用实例方法引用： 对象::实例方法名
+        //lambda体的功能已经有现成的实例方法：PrintStream对象的 void println(String x) 实现，这里要实现的抽象方法是void accept(String t), 两者的函数列表和返回值类型保持一致，所以可以使用实例方法引用： 对象::实例方法名
         Consumer<String> consumer = item -> System.out.println(item);
-
 
         //使用方法引用后参数和箭头都能省略，更加简洁，但是同时也降低了代码可读性
         Consumer<String> consumer2 = System.out::println;
@@ -39,17 +38,18 @@ public class MethodRef {
     @Test
     public void instanceMethodReference2() {
 
-        //lambda体的功能已经有现成的实例方法 String getName() 实现，这里要实现的抽象方法是String get(), 两者的函数列表和返回值类型保持一致，所以可以使用实例方法引用： 对象::实例方法名
         Person person = new Person("ocean", 32);
         Supplier<String> supplier = () -> person.getName();
         Supplier<Integer> supplier2 = () -> person.getAge();
 
+        //lambda体的功能已经有现成的实例方法 String getName() 实现，这里要实现的抽象方法是String get(), 两者的函数列表和返回值类型保持一致，所以可以使用实例方法引用： 对象::实例方法名
         //使用方法引用后参数和箭头都能省略，更加简洁，但是同时也降低了代码可读性
         Supplier<String> supplier3 = person::getName;
         String name = supplier3.get();
         System.out.println(name);
 
-       //使用方法引用后参数和箭头都能省略，更加简洁，但是同时也降低了代码可读性
+        //lambda体的功能已经有现成的实例方法 String getAge() 实现，这里要实现的抽象方法是String get(), 两者的函数列表和返回值类型保持一致，所以可以使用实例方法引用： 对象::实例方法名
+        //使用方法引用后参数和箭头都能省略，更加简洁，但是同时也降低了代码可读性
         Supplier<Integer> supplier4 = person::getAge;
         Integer age = supplier4.get();
         System.out.println(age);
@@ -57,28 +57,28 @@ public class MethodRef {
 
 
     @Test
-    public void staticMethodReference(){
+    public void staticMethodReference() {
         //lambda体的功能已经有现成的静态方法static int compare(int x, int y) 实现，这里要实现的抽象方法是int compare(int x, int y), 两者的函数列表和返回值类型保持一致，所以可以使用静态方法引用：  类::静态方法名
-        Comparator<Integer> comparator=(number1,number2)->Integer.compare(number1,number2);
+        Comparator<Integer> comparator = (number1, number2) -> Integer.compare(number1, number2);
 
         //使用方法引用后参数和箭头都能省略，更加简洁，但是同时也降低了代码可读性
-        Comparator<Integer> comparator2=Integer::compareTo;
+        Comparator<Integer> comparator2 = Integer::compare;
     }
 
 
     /**
      * https://blog.csdn.net/cn19870125/article/details/107692658
      * 使用条件的两种说法：
-     * 1 lambda参数列表（接口方法参数列表）的第一个参数是引用方法调用者类型，第二个参数是实例方法参数类型，可以使用（类名::实例方法名）
+     * 1 lambda参数列表（接口方法参数列表）的第一个参数是引用方法调用者类型，第二个参数是实例方法参数类型，可以使用（调用者类名::实例方法名）
      * 2 接口方法的参数比引用方法的参数多一个， 接口方法的第一个参数恰巧是调用引用方法的对象（其引用方法所在类或其父类的实例）
      */
     @Test
-    public void specialInstanceMethodReference2(){
+    public void specialInstanceMethodReference2() {
         //使用类名::实例方法名调用实例方法
         //lambda参数列表的第一个参数是方法调用者类型，第二个参数是实例方法参数类型，可以使用（类名::实例方法名）
-        BiPredicate<String,String> predicate=(str1,str2)->str1.equals(str2);
+        BiPredicate<String, String> predicate = (str1, str2) -> str1.equals(str2);
 
-        BiPredicate<String,String> predicate2=String::equals;
+        BiPredicate<String, String> predicate2 = String::equals;
 
         boolean test = predicate.test("ocean", "ocean");
         boolean test2 = predicate2.test("ocean", "ocean");
@@ -88,24 +88,31 @@ public class MethodRef {
     }
 
 
-
+    /**
+     * 空参构造方法引用
+     * 接口和构造器的参数列表、返回值要一致
+     */
     @Test
-    public void constructorMethodReference(){
+    public void constructorMethodReference() {
         //lambda体的功能已经有现成的构造方法实现new Person()，这里要实现的抽象方法是Person get(), 两者的函数列表和返回值类型保持一致，所以可以使用构造方法引用：  ClassName::new
-        Supplier<Person> supplier=()->new Person();
+        Supplier<Person> supplier = () -> new Person();
         //这里调用的是空参构造方法
-        Supplier<Person> supplier2=Person::new;
+        Supplier<Person> supplier2 = Person::new;
 
         Person person = supplier.get();
         Person person1 = supplier2.get();
     }
 
+    /**
+     * 单参构造方法引用
+     * 接口和构造器的参数列表、返回值要一致
+     */
     @Test
-    public void constructorMethodReference2(){
+    public void constructorMethodReference2() {
         //lambda体的功能已经有现成的构造方法new Person(int age) 实现，这里要实现的抽象方法是Person apply(Integer i), 两者的函数列表和返回值类型保持一致，所以可以使用构造方法引用：  ClassName::new
-        Function<Integer,Person> function=age->new Person(age);
+        Function<Integer, Person> function = age -> new Person(age);
         //这里调用的是person(int age)构造方法
-        Function<Integer,Person> function2=Person::new;
+        Function<Integer, Person> function2 = Person::new;
 
         Person person = function.apply(32);
         Person person1 = function.apply(33);
@@ -114,26 +121,34 @@ public class MethodRef {
     }
 
 
+    /**
+     * 双参构造方法引用
+     * 接口和构造器的参数列表、返回值要一致
+     */
     @Test
-    public void constructorMethodReference3(){
+    public void constructorMethodReference3() {
         //lambda体的功能已经有现成的构造方法new Person(String name, int age) 实现，这里要实现的抽象方法是Person apply(String name, Integer age), 两者的函数列表和返回值类型保持一致，所以可以使用构造方法引用：  ClassName::new
-        BiFunction<String, Integer, Person> function= (name,age)->new Person(name,age);
+        BiFunction<String, Integer, Person> function = (name, age) -> new Person(name, age);
         //这里调用的是Person(String name, int age)构造方法
-        BiFunction<String, Integer, Person> function2=Person::new;
+        BiFunction<String, Integer, Person> function2 = Person::new;
 
-        Person person = function.apply("ocean",32);
-        Person person1 = function.apply("ocean",33);
+        Person person = function.apply("ocean", 32);
+        Person person1 = function.apply("ocean", 33);
         System.out.println(person.getAge());
         System.out.println(person1.getAge());
     }
 
 
+    /**
+     * 数组构造方法引用
+     * 接口和构造器的参数列表、返回值要一致
+     */
     @Test
-    public void constructorMethodReference4(){
+    public void constructorMethodReference4() {
         //数组构造方法
         //lambda体的功能已经有现成的构造方法new String[int number] 实现，这里要实现的抽象方法是String[] apply(Integer i), 两者的函数列表和返回值类型保持一致，所以可以使用构造方法引用：  ClassName[]::new
-        Function<Integer,String[]> function=age->new String[10];
-        Function<Integer,String[]> function2=String[]::new;
+        Function<Integer, String[]> function = num -> new String[10];
+        Function<Integer, String[]> function2 = String[]::new;
 
         String[] arr1 = function.apply(10);
         String[] arr2 = function.apply(20);

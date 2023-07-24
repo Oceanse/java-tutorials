@@ -10,8 +10,7 @@ public class PolymorphismDemo3 {
     public static void main(String args[]){
         //属性永远和多态引用变量(父变量指向子类对象)声明类型的对象绑定或者编译时类型对象绑定
         Bike bike=new Honda();
-        //90
-        System.out.println(bike.speedLimit);
+        System.out.println(bike.speedLimit);//90
 
         //若想访问运行时类型对象的属性，需要向下转型
         if(bike instanceof Honda){

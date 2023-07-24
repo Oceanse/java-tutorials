@@ -8,11 +8,9 @@ public class Customer2 {
 
     String name;
 
-
     public String getName() {
         return name;
     }
-
 
     /**
      * 这里的this不能省略如果省略；

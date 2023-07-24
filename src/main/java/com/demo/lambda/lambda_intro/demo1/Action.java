@@ -3,6 +3,8 @@ package com.demo.lambda.lambda_intro.demo1;
 
 import com.demo.basic.code_block.construct_block.demo1.Person;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -85,12 +87,39 @@ class LambdaTest {
     }
 
 
+
+    @Test
+    public void test(){
+        List<Integer> list = Arrays.asList(1, 2, 3);
+
+        //lambda表达式
+        list.stream().filter(n->n>1).forEach(n-> System.out.println(n));
+
+
+        //匿名内部类形式，光标放在lambda表达式的参数上，然后alter/option + 回车， 然后选择replace lambda with anonymous class
+        list.stream().filter(new Predicate<Integer>() {
+            @Override
+            public boolean test(Integer n) {
+                return n > 1;
+            }
+        }).forEach(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer n) {
+                System.out.println(n);
+            }
+        });
+
+
+    }
+
+
+
     /**
      * 要把lambda和抽象类、抽象方法的参数和实现关联起来
      * Consumer,Supplier, Predicate,Function都是函数式接口
      */
     @Test
-    public void test() {
+    public void test2() {
         //lambda创建对象的过程可以想象成包含了创建了实现类及其对象
         Consumer<String> consumer = item -> {
             System.out.println(item.length());
